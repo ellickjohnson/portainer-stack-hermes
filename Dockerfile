@@ -2,8 +2,6 @@ FROM python:3.11-slim
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
     git curl ttyd nodejs npm \
-    build-essential \
-    ffmpeg \
     && rm -rf /var/lib/apt/lists/*
 
 RUN curl -LsSf https://astral.sh/uv/install.sh | sh
@@ -15,13 +13,13 @@ RUN git clone --depth 1 --branch ${HERMES_REF} https://github.com/NousResearch/h
     && git submodule update --init mini-swe-agent \
     && uv venv /opt/hermes/.venv --python 3.11 \
     && . /opt/hermes/.venv/bin/activate \
-    && uv pip install -e ".[all]" \
+    && uv pip install -e "." \
     && uv pip install -e "./mini-swe-agent"
 
 RUN mkdir -p /root/.hermes
 WORKDIR /root
 
-RUN echo '#!/bin/bash\nsource /opt/hermes/.venv/bin/activate\ncd /root\nhermes' > /start-hermes.sh \
+RUN printf '#!/bin/bash\nsource /opt/hermes/.venv/bin/activate\ncd /root\nhermes\n' > /start-hermes.sh \
     && chmod +x /start-hermes.sh
 
 EXPOSE 7681

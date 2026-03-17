@@ -2,7 +2,7 @@ version: "3.8"
 
 services:
   hermes:
-    build: .
+    image: ghcr.io/ellickjohnson/hermes:latest
     container_name: hermes
     restart: unless-stopped
     ports:

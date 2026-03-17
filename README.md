@@ -1,17 +1,14 @@
-# Hermes Agent Deployment
+# Hermes - Portainer Stack
 
-Hermes Agent with ttyd web terminal interface.
+Hermes agent with ttyd web terminal, running from pre-built GHCR image.
 
-## Access
-- URL: https://hermes.ellickjohnson.net
-- Port: 7681 (internal)
+## Setup
 
-## What is Hermes?
-The self-improving AI agent by Nous Research. Features:
-- Real terminal interface via ttyd
-- Multi-platform messaging gateway
-- Persistent memory and skill creation
-- Scheduled automations
+1. **Build image**: Run the GitHub Action (Actions → Build and Push Hermes Image → Run workflow)
+2. **Deploy**: Add as a Git Repository stack in Portainer pointing to this repo
+3. **Access**: `http://<host>:7681`
 
-## Configuration
-First run: `hermes setup` to configure LLM provider and tools.
+## Updating
+
+1. Run the GitHub Action to build a new image
+2. In Portainer, pull and redeploy the stack

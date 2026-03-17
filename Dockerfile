@@ -4,6 +4,10 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     git curl \
     && rm -rf /var/lib/apt/lists/*
 
+RUN ARCH=$(uname -m) && \
+    curl -sL https://github.com/tsl0922/ttyd/releases/latest/download/ttyd.${ARCH} -o /usr/local/bin/ttyd && \
+    chmod +x /usr/local/bin/ttyd
+
 RUN curl -LsSf https://astral.sh/uv/install.sh | sh
 ENV PATH="/root/.local/bin:$PATH"
 
@@ -19,8 +23,8 @@ RUN git clone --depth 1 --branch ${HERMES_REF} https://github.com/NousResearch/h
 RUN mkdir -p /root/.hermes
 WORKDIR /root
 
-RUN printf '#!/bin/bash\nsource /opt/hermes/.venv/bin/activate\ncd /root\nhermes\n' > /start-hermes.sh \
+RUN printf '#!/bin/bash\n. /opt/hermes/.venv/bin/activate\ncd /root\nhermes\n' > /start-hermes.sh \
     && chmod +x /start-hermes.sh
 
 EXPOSE 7681
-CMD ["sh", "-c", "source /opt/hermes/.venv/bin/activate && cd /root && hermes"]
+CMD ["ttyd", "-W", "-p", "7681", "/start-hermes.sh"]

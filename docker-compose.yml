@@ -1,64 +1,64 @@
-                                                                                                                                                                                             
-services:                                                                                                                                                                                                 
-  hermes:                                                                                                                                                                                                 
-    image: nousresearch/hermes-agent:latest                                                                                                                                                               
-    container_name: hermes                                                                                                                                                                                
-    restart: unless-stopped                                                                                                                                                                               
-                                                                                                                                                                                                          
-    # Gateway mode: enables both Telegram bot AND API server                                                                                                                                              
-    command: gateway run                                                                                                                                                                                  
-                                                                                                                                                                                                          
-    ports:                                                                                                                                                                                                
-      - "7681:8642"   # API server (host:container)                                                                                                                                                       
-                                                                                                                                                                                                          
-    volumes:                                                                                                                                                                                              
-      - hermes-data:/opt/data                                                                                                                                                                             
-                                                                                                                                                                                                          
-    environment:                                                                                                                                                                                          
-      # API Server                                                                                                                                                                                        
-      # - API_SERVER_ENABLED=true                                                                                                                                                                           
-      # - API_SERVER_KEY=${API_SERVER_KEY}                                                                                                                                                                  
+
+services:
+  hermes:
+    image: nousresearch/hermes-agent:latest
+    container_name: hermes
+    restart: unless-stopped
+
+    # Gateway mode: enables both Telegram bot AND API server
+    command: gateway run
+
+    ports:
+      - "7681:8642"   # API server (host:container)
+
+    volumes:
+      - hermes-data:/opt/data
+
+    environment:
+      # API Server
+      # - API_SERVER_ENABLED=true
+      # - API_SERVER_KEY=${API_SERVER_KEY}
 
       - OLLAMA_CLOUD_API_KEY=${OLLAMA_CLOUD_API_KEY}
-                                                                                                                                                                                                          
-      # Telegram                                                                                                                                                                                          
-      - TELEGRAM_BOT_TOKEN=${TELEGRAM_BOT_TOKEN}                                                                                                                                                          
-      - TELEGRAM_ALLOWED_USERS=${TELEGRAM_ALLOWED_USERS:-}                                                                                                                                                
-      - TELEGRAM_HOME_CHANNEL=${TELEGRAM_HOME_CHANNEL:-}                                                                                                                                                  
-                                                                                                                                                                                                          
-      # Optional integrations                                                                                                                                                                             
-      - HASS_URL=http://192.168.2.172:8123                                                                                                                                                              
-      - HASS_TOKEN=${HASS_TOKEN}                                                                                                                                                                        
-      - FAL_KEY=${FAL_KEY}                                                                                                                                                                              
-                                                                                                                                                                                                          
-      - TZ=${TZ:-MDT}                                                                                                                                                                                     
+
+      # Telegram
+      - TELEGRAM_BOT_TOKEN=${TELEGRAM_BOT_TOKEN}
+      - TELEGRAM_ALLOWED_USERS=${TELEGRAM_ALLOWED_USERS:-}
+      - TELEGRAM_HOME_CHANNEL=${TELEGRAM_HOME_CHANNEL:-}
+
+      # Optional integrations
+      - HASS_URL=http://192.168.2.172:8123
+      - HASS_TOKEN=${HASS_TOKEN}
+      - FAL_KEY=${FAL_KEY}
+
+      - TZ=${TZ:-MDT}
       - TELEGRAM_POLL_TIMEOUT=90
       - TELEGRAM_RETRY_ATTEMPTS=20
       - TERMINAL_BACKEND=docker
       - PYTHONUNBUFFERED=1
-      - HERMES_SKIP_PERMISSIONS_SETUP=true                                                                                                                                                                                                          
-    # Resource limits                                                                                                                                                                                     
-    deploy:                                                                                                                                                                                               
-      resources:                                                                                                                                                                                          
-        limits:                                                                                                                                                                                           
-          memory: 4G                                                                                                                                                                                      
-          cpus: "2.0"                                                                                                                                                                                     
+      - HERMES_SKIP_PERMISSIONS_SETUP=true
+    # Resource limits
+    deploy:
+      resources:
+        limits:
+          memory: 4G
+          cpus: "2.0"
 
     networks:
       - proxy-net
       - ollama-net
 
-    healthcheck:                                                                                                                                                                                          
-      test: ["CMD", "curl", "-f", "http://localhost:8642/health"]                                                                                                                                         
-      interval: 30s                                                                                                                                                                                       
-      timeout: 10s                                                                                                                                                                                        
-      retries: 3                                                                                                                                                                                          
-      start_period: 40s                                                                                                                                                                                   
-                                                                                                                                                                                                          
-volumes:                                                                                                                                                                                                  
-  hermes-data:                                                                                                                                                                                            
-    name: hermes-data 
-    
+    healthcheck:
+      test: ["CMD", "python3", "-c", "import os; os.kill(1, 0)"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+volumes:
+  hermes-data:
+    name: hermes-data
+
 networks:
   proxy-net:
     external: true

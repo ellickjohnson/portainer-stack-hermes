@@ -14,6 +14,7 @@ services:
       - TELEGRAM_RETRY_ATTEMPTS=20  
       - TERMINAL_BACKEND=docker
       - PYTHONUNBUFFERED=1
+      - HERMES_SKIP_PERMISSIONS_SETUP=true
     # Optional but helpful for Telegram stability
     # healthcheck:
     #   test: ["CMD", "hermes", "gateway", "status"]

@@ -67,3 +67,4 @@ networks:
     name: proxy-net
   ollama-net:
     name: ollama-net
+    external: true

@@ -18,10 +18,8 @@ services:
       # API Server                                                                                                                                                                                        
       # - API_SERVER_ENABLED=true                                                                                                                                                                           
       # - API_SERVER_KEY=${API_SERVER_KEY}                                                                                                                                                                  
-                                                                                                                                                                                                          
-      # Ollama (no real key needed)                                                                                                                                                                       
-      - OPENAI_API_KEY=ollama-local                                                                                                                                                                       
-      - OPENAI_BASE_URL=http://ollama:11434/v1                                                                                                                                          
+
+      - OLLAMA_CLOUD_API_KEY=${OLLAMA_CLOUD_API_KEY}
                                                                                                                                                                                                           
       # Telegram                                                                                                                                                                                          
       - TELEGRAM_BOT_TOKEN=${TELEGRAM_BOT_TOKEN}                                                                                                                                                          

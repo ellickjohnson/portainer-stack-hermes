@@ -10,6 +10,9 @@ services:
       - hermes_data:/opt/data
     environment:
       - TZ=America/Denver
-
+      - TELEGRAM_POLL_TIMEOUT=60
+      - TELEGRAM_RETRY_ATTEMPTS=15
+      - TERMINAL_BACKEND=docker
+      
 volumes:
   hermes_data:

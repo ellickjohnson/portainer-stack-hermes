@@ -1,18 +1,15 @@
-version: "3.8"
-
 services:
   hermes:
-    image: ghcr.io/ellickjohnson/hermes:latest
+    image: nousresearch/hermes-agent:latest
     container_name: hermes
     restart: unless-stopped
+    command: gateway run
     ports:
-      - "7681:7681"
+      - "8642:8642"
     volumes:
-      - hermes_data:/root/.hermes
+      - hermes_data:/opt/data
     environment:
       - TZ=America/Denver
-    stdin_open: true
-    tty: true
 
 volumes:
   hermes_data:

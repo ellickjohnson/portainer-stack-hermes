@@ -5,14 +5,22 @@ services:
     restart: unless-stopped
     command: gateway run
     ports:
-      - "8642:8642"
+      - "8642:8642" 
     volumes:
       - hermes_data:/opt/data
     environment:
       - TZ=America/Denver
-      - TELEGRAM_POLL_TIMEOUT=60
-      - TELEGRAM_RETRY_ATTEMPTS=15
+      - TELEGRAM_POLL_TIMEOUT=90 
+      - TELEGRAM_RETRY_ATTEMPTS=20  
       - TERMINAL_BACKEND=docker
-      
+      - PYTHONUNBUFFERED=1
+    # Optional but helpful for Telegram stability
+    # healthcheck:
+    #   test: ["CMD", "hermes", "gateway", "status"]
+    #   interval: 30s
+    #   timeout: 10s
+    #   retries: 5
+    #   start_period: 60s
+
 volumes:
   hermes_data:

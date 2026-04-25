@@ -13,6 +13,7 @@ services:
 
     volumes:
       - hermes-data:/opt/data
+      - /mnt/truenas/storage/backups/hermes:/opt/backups
 
     environment:
       # API Server

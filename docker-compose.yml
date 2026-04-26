@@ -14,6 +14,7 @@ services:
     volumes:
       - hermes-data:/opt/data
       - /mnt/truenas/storage/backups/hermes:/opt/backups
+      - /mnt/truenas/storage/obsidian-vault:/opt/obsidian-vault
 
     environment:
       # API Server
@@ -39,11 +40,11 @@ services:
       - PYTHONUNBUFFERED=1
       - HERMES_SKIP_PERMISSIONS_SETUP=true
     # Resource limits
-    deploy:
-      resources:
-        limits:
-          memory: 4G
-          cpus: "2.0"
+    # deploy:
+    #   resources:
+    #     limits:
+    #       memory: 4G
+    #       cpus: "2.0"
 
     networks:
       - proxy-net

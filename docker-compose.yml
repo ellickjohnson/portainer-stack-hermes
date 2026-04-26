@@ -17,22 +17,6 @@ services:
       - /mnt/truenas/storage/obsidian-vault:/opt/obsidian-vault
 
     environment:
-      # API Server
-      # - API_SERVER_ENABLED=true
-      # - API_SERVER_KEY=${API_SERVER_KEY}
-
-      - OLLAMA_CLOUD_API_KEY=${OLLAMA_CLOUD_API_KEY}
-
-      # Telegram
-      - TELEGRAM_BOT_TOKEN=${TELEGRAM_BOT_TOKEN}
-      - TELEGRAM_ALLOWED_USERS=${TELEGRAM_ALLOWED_USERS:-}
-      - TELEGRAM_HOME_CHANNEL=${TELEGRAM_HOME_CHANNEL:-}
-
-      # Optional integrations
-      - HASS_URL=http://192.168.2.172:8123
-      - HASS_TOKEN=${HASS_TOKEN}
-      - FAL_KEY=${FAL_KEY}
-
       - TZ=${TZ:-MDT}
       - TELEGRAM_POLL_TIMEOUT=90
       - TELEGRAM_RETRY_ATTEMPTS=20
